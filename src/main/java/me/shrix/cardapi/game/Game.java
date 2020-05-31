@@ -34,7 +34,7 @@ public class Game {
      */
     public void generateTestCards(int n) {
         for(int i = 0; i < n; i++) {
-            cardsInGame.add(new Card((short) i, 0, "Dies ist die Testkarte " + i));
+            cardsInGame.add(new Card((short) i, CardType.BLACK, "Dies ist die Testkarte " + i));
         }
     }
 
