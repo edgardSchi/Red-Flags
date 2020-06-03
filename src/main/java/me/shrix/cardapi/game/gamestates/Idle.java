@@ -3,17 +3,20 @@ package me.shrix.cardapi.game.gamestates;
 import me.shrix.cardapi.db.models.Player;
 import me.shrix.cardapi.game.Game;
 
-public class NewTurn implements IGameState {
-
-    private Game game;
-
-    public NewTurn() {
-        game = Game.getInstance();
-    }
+public class Idle implements IGameState {
 
     @Override
     public GameStateManager.GameState getNextGameState() {
-        return null;
+
+        Game game = Game.getInstance();
+
+        for(Player p : game.getPlayers()) {
+            for(int i = 0; i < Game.NUMBER_OF_RED_CARDS_IN_HAND; i++) {
+                p.addCard(game.drawRedCard());
+            }
+        }
+
+        return GameStateManager.GameState.NEW_TURN;
     }
 
     @Override
@@ -29,12 +32,5 @@ public class NewTurn implements IGameState {
     @Override
     public void onStart() {
 
-    }
-
-    //Draw new cards at the beginning of a round if you don't have enough cards
-    private void drawNewCards() {
-        for(Player p : game.getPlayers()) {
-
-        }
     }
 }

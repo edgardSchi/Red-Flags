@@ -1,7 +1,6 @@
 package me.shrix.cardapi.game.gamestates;
 
-public class PlayingRed implements IGameState {
-
+public class BachelorChoosing implements IGameState{
     @Override
     public GameStateManager.GameState getNextGameState() {
         return null;

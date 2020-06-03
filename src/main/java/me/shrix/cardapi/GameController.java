@@ -49,6 +49,7 @@ public class GameController {
         //return game.getPlayers();
     }
 
+    /* ### playCard method not working. Old way! ###
     @MessageMapping("/playCard")
     public void playCard(SimpMessageHeaderAccessor sha, int cardId) {
         Card card = game.playCard(sha.getUser().getName(), cardId);
@@ -58,7 +59,9 @@ public class GameController {
             gameService.sendInvalidCardPlayed(sha.getUser().getName());
         }
     }
+     */
 
+    /* ### drawCard method not working. Old way! ###
     @MessageMapping("/drawCard")
     public void drawCard(SimpMessageHeaderAccessor sha) throws Exception {
         Card card = game.drawCard(sha.getUser().getName());
@@ -66,5 +69,6 @@ public class GameController {
             gameService.sendDrawnCard(sha.getUser().getName(), card);
         }
     }
+     */
 
 }
