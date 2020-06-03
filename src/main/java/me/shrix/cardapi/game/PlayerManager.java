@@ -8,11 +8,20 @@ import java.util.List;
 
 public class PlayerManager {
 
-    private HashMap<String, Player> players;
+    private static PlayerManager instance;
+
+    private final HashMap<String, Player> players;
     private String currentPlayerId;
 
-    public PlayerManager() {
-        players = new HashMap<String, Player>();
+    private PlayerManager() {
+        players = new HashMap<>();
+    }
+
+    public static PlayerManager getInstance() {
+        if(instance == null) {
+            instance = new PlayerManager();
+        }
+        return instance;
     }
 
     /**
@@ -20,9 +29,7 @@ public class PlayerManager {
      * @return current players as a List
      */
     public List<Player> getPlayers() {
-        List<Player> list = new ArrayList<Player>();
-        list.addAll(players.values());
-        return list;
+        return new ArrayList<>(players.values());
     }
 
     /**
@@ -58,5 +65,20 @@ public class PlayerManager {
         return currentPlayerId;
     }
 
+    /**
+     * Sets the current players id
+     * @param player
+     */
+    public void setCurrentPlayersId(Player player) {
+        this.currentPlayerId = player.getId();
+    }
+
+    /**
+     * Sets the current players id
+     * @param id
+     */
+    public void setCurrentPlayersId(String id) {
+        this.currentPlayerId = id;
+    }
 
 }
