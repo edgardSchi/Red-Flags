@@ -6,7 +6,7 @@ import me.shrix.cardapi.game.Game;
 public class Idle implements IGameState {
 
     @Override
-    public GameStateManager.GameState getNextGameState() {
+    public GameState getNextGameState() {
 
         Game game = Game.getInstance();
 
@@ -16,7 +16,7 @@ public class Idle implements IGameState {
             }
         }
 
-        return GameStateManager.GameState.NEW_TURN;
+        return GameState.NEW_TURN;
     }
 
     @Override

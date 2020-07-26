@@ -78,6 +78,12 @@ public class Player {
         }
     }
 
+    public void addCards(Card[] cards) {
+        for(int i = 0; i < cards.length; i++) {
+            addCard(cards[i]);
+        }
+    }
+
     private void addCardToArray(Card[] arr, Card c) {
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] == null) {
@@ -100,8 +106,16 @@ public class Player {
         }
     }
 
+    public int numberOfBlackCards() {
+        return blackCards.length;
+    }
+
+    public int numberOfRedCards() {
+        return redCards.length;
+    }
+
     public int getNumberOfCards() {
-        return cards.size();
+        return numberOfBlackCards() + numberOfRedCards();
     }
 
     public Status getStatus() {

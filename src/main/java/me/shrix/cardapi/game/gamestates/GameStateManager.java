@@ -11,20 +11,11 @@ import java.util.Map;
  */
 public class GameStateManager {
 
-    public enum GameState {
-        IDLE,
-        PLAYING_RED,
-        PLAYING_BLACK,
-        BACHELOR_CHOOSING,
-        NEW_TURN,
-    }
-
-    private static GameStateManager instance;
-    private Map<Enum, IGameState> gameStates;
+    private static EnumMap<GameState, IGameState> gameStates;
     private IGameState currentGameState;
 
-    private GameStateManager(){
-        gameStates = new EnumMap(GameState.class);
+    public GameStateManager(){
+        gameStates = new EnumMap<GameState, IGameState>(GameState.class);
         initGameStates();
     };
 
@@ -38,15 +29,9 @@ public class GameStateManager {
         currentGameState = gameStates.get(GameState.IDLE);
     }
 
-    public static GameStateManager getInstance() {
-        if(instance == null) {
-            instance = new GameStateManager();
-        }
-        return instance;
-    }
-
     public void changeState() {
         //gets the next game state and performs the last tasks of the current game state
         currentGameState = gameStates.get(currentGameState.getNextGameState());
+        currentGameState.onStart();
     }
 }

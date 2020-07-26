@@ -3,7 +3,7 @@ package me.shrix.cardapi.game.gamestates;
 public class PlayingRed implements IGameState {
 
     @Override
-    public GameStateManager.GameState getNextGameState() {
+    public GameState getNextGameState() {
         return null;
     }
 

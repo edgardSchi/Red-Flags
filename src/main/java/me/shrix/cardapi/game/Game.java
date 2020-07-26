@@ -15,22 +15,18 @@ public class Game {
     public static final int NUMBER_OF_BLACK_CARDS_IN_HAND = 3;
     public static final int POINTS_TO_WIN = 3;
 
-    enum GameState {LOBBY, CHOOSING_WHITE, CHOOSING_RED, CHOOSING_WINNER}
-
-    //Player that has to choose a winner
+    //The current player, who chooses a card or needs to play a card
     private Player currentPlayer;
 
     private static Game instance;
 
-    //private ArrayList<Player> players = new ArrayList<Player>();
     private HashMap<String, Player> players = new HashMap<String, Player>();
     private ArrayList<Card> blackCardsInGame = new ArrayList<Card>();
     private ArrayList<Card> redCardsInGame = new ArrayList<Card>();
     private GameStateManager gsm;
 
     private Game() {
-        gsm = GameStateManager.getInstance();
-
+        gsm = new GameStateManager();
         generateTestCards(50);
     }
 
@@ -48,9 +44,9 @@ public class Game {
     public void generateTestCards(int n) {
         for(int i = 0; i < n; i++) {
             blackCardsInGame.add(new Card((short) i, CardType.BLACK, "Dies ist die schwarze Testkarte " + i));
-        }
-        for(int i = 0; i < n; i++) {
             redCardsInGame.add(new Card((short) i, CardType.RED, "Dies ist die rote Testkarte " + i));
+            System.out.println(blackCardsInGame.get(i));
+            System.out.println(redCardsInGame.get(i));
         }
     }
 
@@ -103,12 +99,36 @@ public class Game {
         }
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public Player getPlayer(String id) {
         return players.get(id);
     }
 
     public Card drawBlackCard() {
         return drawCard(blackCardsInGame);
+    }
+
+    public Card[] drawBlackCards(int n) {
+        Card[] cards = new Card[n];
+
+        for(int i = 0; i < n; i++) {
+            cards[i] = drawBlackCard();
+        }
+
+        return cards;
+    }
+
+    public Card[] drawRedCards(int n) {
+        Card[] cards = new Card[n];
+
+        for(int i = 0; i < n; i++) {
+            cards[i] = drawRedCard();
+        }
+
+        return cards;
     }
 
     public Card drawRedCard() {

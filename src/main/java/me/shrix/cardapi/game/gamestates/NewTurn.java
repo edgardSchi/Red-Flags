@@ -5,14 +5,13 @@ import me.shrix.cardapi.game.Game;
 
 public class NewTurn implements IGameState {
 
-    private Game game;
 
     public NewTurn() {
-        game = Game.getInstance();
+
     }
 
     @Override
-    public GameStateManager.GameState getNextGameState() {
+    public GameState getNextGameState() {
         return null;
     }
 
@@ -28,13 +27,23 @@ public class NewTurn implements IGameState {
 
     @Override
     public void onStart() {
-
+        drawNewCards();
     }
 
     //Draw new cards at the beginning of a round if you don't have enough cards
     private void drawNewCards() {
+        Game game = Game.getInstance();
+        //Draw new red cards
         for(Player p : game.getPlayers()) {
-
+            if(p.numberOfRedCards() < Game.NUMBER_OF_RED_CARDS_IN_HAND) {
+                p.addCards(game.drawRedCards(Game.NUMBER_OF_RED_CARDS_IN_HAND - p.numberOfRedCards()));
+            }
+        }
+        //Draw new black cards
+        for(Player p : game.getPlayers()) {
+            if(p.numberOfBlackCards() < Game.NUMBER_OF_BLACK_CARDS_IN_HAND) {
+                p.addCards(game.drawBlackCards(Game.NUMBER_OF_BLACK_CARDS_IN_HAND - p.numberOfBlackCards()));
+            }
         }
     }
 }
