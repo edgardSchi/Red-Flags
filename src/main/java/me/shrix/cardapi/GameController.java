@@ -3,11 +3,15 @@ package me.shrix.cardapi;
 import me.shrix.cardapi.db.models.Card;
 import me.shrix.cardapi.db.models.Player;
 import me.shrix.cardapi.game.Game;
+import me.shrix.cardapi.game.exceptions.UserIdTakenException;
+import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.stereotype.Controller;
+
+import java.util.ArrayList;
 
 @Controller
 public class GameController {
@@ -39,14 +43,18 @@ public class GameController {
     public void joinGame(SimpMessageHeaderAccessor sha, String username) throws Exception {
         Player player = new Player(sha.getUser().getName(), username);
 
-        if(!game.addPlayer(player)) {
+        try {
+            game.addPlayer(player);
+        } catch (UsernameTakenException ex) {
             gameService.sendInvalidUsername(sha.getUser().getName());
-        } else {
-            gameService.updateConnectedPlayers(player);
-            gameService.sendAllPlayersToSinglePlayer(sha.getUser().getName(), game.getPlayers());
+            return;
+        } catch (UserIdTakenException ex) {
+            gameService.sendInvalidUsername(sha.getUser().getName()); //Should create new message for invalid id
+            return;
         }
 
-        //return game.getPlayers();
+        gameService.updateConnectedPlayers(player);
+        gameService.sendAllPlayersToSinglePlayer(sha.getUser().getName(), new ArrayList(game.getPlayers()));
     }
 
     /* ### playCard method not working. Old way! ###

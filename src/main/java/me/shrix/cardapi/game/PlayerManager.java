@@ -1,6 +1,8 @@
 package me.shrix.cardapi.game;
 
 import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.exceptions.UserIdTakenException;
+import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +39,31 @@ public class PlayerManager {
      * @param userId players id
      * @param username players name
      */
-    public void addPlayer(String userId, String username) {
-        players.put(userId, new Player(userId, username));
+    public void addPlayer(String userId, String username) throws UserIdTakenException, UsernameTakenException {
+        addPlayer(new Player(userId, username));
+    }
+
+    /**
+     * Adds a new player to the game
+     * @param player player object
+     */
+    public void addPlayer(Player player) throws UsernameTakenException, UserIdTakenException {
+        if(players.containsKey(player.getId())) throw new UserIdTakenException(player.getId());
+        for(Player p : players.values()) {
+            if(p.getUsername().equals(player.getUsername())) {
+                throw new UsernameTakenException(p.getUsername());
+            }
+        }
+        players.put(player.getId(), player);
+    }
+
+    /**
+     * Returns the player with the given id
+     * @param userId id of the player
+     * @return the player with this id
+     */
+    public Player getPlayer(String userId) {
+        return players.get(userId);
     }
 
     /**

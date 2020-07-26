@@ -2,11 +2,13 @@ package me.shrix.cardapi.game;
 
 import me.shrix.cardapi.db.models.Card;
 import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.exceptions.UserIdTakenException;
+import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 import me.shrix.cardapi.game.gamestates.GameStateManager;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 @Component
 public class Game {
@@ -20,13 +22,15 @@ public class Game {
 
     private static Game instance;
 
-    private HashMap<String, Player> players = new HashMap<String, Player>();
+    //private HashMap<String, Player> players = new HashMap<String, Player>();
     private ArrayList<Card> blackCardsInGame = new ArrayList<Card>();
     private ArrayList<Card> redCardsInGame = new ArrayList<Card>();
     private GameStateManager gsm;
+    private PlayerManager playerManager;
 
     private Game() {
         gsm = new GameStateManager();
+        playerManager = PlayerManager.getInstance();
         generateTestCards(50);
     }
 
@@ -58,31 +62,21 @@ public class Game {
         }
     }
 
-    public boolean addPlayer(String id, String username) {
-        return this.addPlayer(new Player(id, username));
+    public void addPlayer(String id, String username) throws UsernameTakenException, UserIdTakenException {
+        playerManager.addPlayer(id, username);
     }
 
-    //Vielleicht lieber mit einer Exception arbeiten?
-    public boolean addPlayer(Player player) {
-        for(Player p : players.values()) {
-            if(p.getUsername().equals(player.getUsername())) {
-                System.out.println("Name equal to: " + p.getUsername());
-                return false;
-            }
-        }
-        players.put(player.getId(), player);
-        return true;
+    public void addPlayer(Player player) throws UsernameTakenException, UserIdTakenException {
+        playerManager.addPlayer(player);
     }
 
-    public ArrayList<Player> getPlayers() {
-        ArrayList<Player> list = new ArrayList<Player>();
-        list.addAll(players.values());
-        return list;
+    public List<Player> getPlayers() {
+        return playerManager.getPlayers();
     }
 
     //Change the output
-    public void playCard(String userID, int cardId) {
-        Player player = players.get(userID);
+    public void playCard(String userId, int cardId) {
+        Player player = playerManager.getPlayer(userId);
 
         if(!player.equals(currentPlayer)) return;
 
@@ -103,9 +97,9 @@ public class Game {
         return currentPlayer;
     }
 
-    public Player getPlayer(String id) {
+    /*public Player getPlayer(String id) {
         return players.get(id);
-    }
+    }*/
 
     public Card drawBlackCard() {
         return drawCard(blackCardsInGame);
@@ -154,12 +148,16 @@ public class Game {
     }
 
     private void everyPlayerDrawsCard(ArrayList<Card> list) {
-        for (Player p : players.values()) {
+        for (Player p : playerManager.getPlayers()) {
             p.addCard(drawCard(list));
         }
     }
 
     public void nextState() {
         gsm.changeState();
+    }
+
+    public int getNumberOfPlayers() {
+        return playerManager.getPlayers().size();
     }
 }
