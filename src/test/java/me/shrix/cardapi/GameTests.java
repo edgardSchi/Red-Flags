@@ -1,12 +1,11 @@
 package me.shrix.cardapi;
 
-import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.Player;
 import me.shrix.cardapi.game.Game;
 import me.shrix.cardapi.game.exceptions.UserIdTakenException;
 import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,7 +35,7 @@ public class GameTests {
 
     void drawCard() throws UsernameTakenException, UserIdTakenException {
         game.addPlayer(new Player("0", "foo"));
-        game.generateTestCards(10);
+        //game.generateTestCards(10);
         game.everPlayerDrawsBlackCard();
         //assertNotNull(game.getPlayer("0").getCards());
     }

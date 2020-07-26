@@ -1,6 +1,6 @@
 package me.shrix.cardapi.game.gamestates;
 
-import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.Player;
 import me.shrix.cardapi.game.Game;
 
 public class NewTurn implements IGameState {

@@ -1,6 +1,7 @@
-package me.shrix.cardapi.db.models;
+package me.shrix.cardapi.game;
 
 import com.mongodb.lang.NonNull;
+import me.shrix.cardapi.db.models.Card;
 import me.shrix.cardapi.game.CardType;
 import me.shrix.cardapi.game.Game;
 import org.springframework.data.annotation.Id;

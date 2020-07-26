@@ -1,7 +1,6 @@
 package me.shrix.cardapi.game;
 
 import me.shrix.cardapi.db.models.Card;
-import me.shrix.cardapi.db.models.Player;
 import me.shrix.cardapi.game.exceptions.UserIdTakenException;
 import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 import me.shrix.cardapi.game.gamestates.GameStateManager;
@@ -31,7 +30,6 @@ public class Game {
     private Game() {
         gsm = new GameStateManager();
         playerManager = PlayerManager.getInstance();
-        generateTestCards(50);
     }
 
     public static Game getInstance() {
@@ -41,18 +39,15 @@ public class Game {
         return instance;
     }
 
-    /**
-     * Generates n black and red testing cards. Will eventually be removed
-     * @param n
-     */
-    public void generateTestCards(int n) {
+
+ /*   public void generateTestCards(int n) {
         for(int i = 0; i < n; i++) {
             blackCardsInGame.add(new Card((short) i, CardType.BLACK, "Dies ist die schwarze Testkarte " + i));
             redCardsInGame.add(new Card((short) i, CardType.RED, "Dies ist die rote Testkarte " + i));
             System.out.println(blackCardsInGame.get(i));
             System.out.println(redCardsInGame.get(i));
         }
-    }
+    }*/
 
     public void addCard(Card card) {
         if (card.getCardType() == CardType.BLACK) {

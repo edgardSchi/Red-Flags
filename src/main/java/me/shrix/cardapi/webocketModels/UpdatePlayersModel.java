@@ -1,6 +1,6 @@
 package me.shrix.cardapi.webocketModels;
 
-import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.Player;
 
 public class UpdatePlayersModel {
 

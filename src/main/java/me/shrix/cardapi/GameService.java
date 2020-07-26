@@ -1,7 +1,7 @@
 package me.shrix.cardapi;
 
 import me.shrix.cardapi.db.models.Card;
-import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.Player;
 import me.shrix.cardapi.webocketModels.ErrorModel;
 import me.shrix.cardapi.webocketModels.UpdatePlayerCardsModel;
 import me.shrix.cardapi.webocketModels.UpdatePlayersModel;

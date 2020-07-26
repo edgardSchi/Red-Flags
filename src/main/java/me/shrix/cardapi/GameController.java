@@ -1,7 +1,6 @@
 package me.shrix.cardapi;
 
-import me.shrix.cardapi.db.models.Card;
-import me.shrix.cardapi.db.models.Player;
+import me.shrix.cardapi.game.Player;
 import me.shrix.cardapi.game.Game;
 import me.shrix.cardapi.game.exceptions.UserIdTakenException;
 import me.shrix.cardapi.game.exceptions.UsernameTakenException;
