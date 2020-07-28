@@ -1,9 +1,11 @@
 package me.shrix.cardapi.game;
 
+import me.shrix.cardapi.game.exceptions.NoSuchPlayerException;
 import me.shrix.cardapi.game.exceptions.UserIdTakenException;
 import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,7 +63,8 @@ public class PlayerManager {
      * @param userId id of the player
      * @return the player with this id
      */
-    public Player getPlayer(String userId) {
+    public Player getPlayer(String userId) throws NoSuchPlayerException {
+        if(!players.containsKey(userId)) throw new NoSuchPlayerException(userId);
         return players.get(userId);
     }
 
@@ -69,7 +72,8 @@ public class PlayerManager {
      * Removes a player from the game
      * @param userId players id
      */
-    public void removePlayer(String userId) {
+    public void removePlayer(String userId) throws NoSuchPlayerException {
+        if(!players.containsKey(userId)) throw new NoSuchPlayerException(userId);
         players.remove(userId);
     }
 
@@ -105,4 +109,7 @@ public class PlayerManager {
         this.currentPlayerId = id;
     }
 
+    public Collection<Player> allPlayers() {
+        return players.values();
+    }
 }

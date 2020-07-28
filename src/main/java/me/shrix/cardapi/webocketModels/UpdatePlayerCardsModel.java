@@ -1,6 +1,7 @@
 package me.shrix.cardapi.webocketModels;
 
-import me.shrix.cardapi.db.models.Card;
+
+import me.shrix.cardapi.game.Card;
 
 public class UpdatePlayerCardsModel {
 
@@ -10,6 +11,7 @@ public class UpdatePlayerCardsModel {
     private String playerId;
     private Card updatedCard;
 
+    // ### Might have to make this class new because of new card class
     public UpdatePlayerCardsModel(Intent intent, String userId, Card updatedCard) {
         this.playerId = playerId;
         this.updatedCard = updatedCard;

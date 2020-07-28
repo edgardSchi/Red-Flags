@@ -4,7 +4,7 @@ import me.shrix.cardapi.game.CardType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Card {
+/*public class Card {
 
 
 
@@ -38,4 +38,4 @@ public class Card {
     public void setContent(String content) {
         this.content = content;
     }
-}
+}*/

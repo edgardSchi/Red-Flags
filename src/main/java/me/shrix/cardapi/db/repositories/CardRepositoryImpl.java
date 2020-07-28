@@ -1,6 +1,5 @@
 package me.shrix.cardapi.db.repositories;
 
-import me.shrix.cardapi.db.models.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -19,12 +18,12 @@ public class CardRepositoryImpl implements CardRepositoryCustom {
         this.mongoTemplate = mongoTemplate;
     }
 
-    @Override
+/*    @Override
     public List<Card> findRandomCards(int number) {
         List<AggregationOperation> list = new ArrayList<AggregationOperation>();
         list.add(Aggregation.sample(number));
 
         TypedAggregation<Card> agg = Aggregation.newAggregation(Card.class, list);
         return mongoTemplate.aggregate(agg, Card.class, Card.class).getMappedResults();
-    }
+    }*/
 }

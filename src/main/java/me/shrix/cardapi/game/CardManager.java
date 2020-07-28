@@ -1,12 +1,12 @@
 package me.shrix.cardapi.game;
 
-import me.shrix.cardapi.db.models.Card;
-
-import java.util.ArrayList;
+import me.shrix.cardapi.game.exceptions.NoSuchCardException;
 import java.util.HashMap;
 import java.util.Random;
 
 public class CardManager {
+
+    public enum CardType {BLACK, RED};
 
     private static CardManager instance;
 
@@ -23,7 +23,7 @@ public class CardManager {
         generateTestCards(50);
     }
 
-    public CardManager getInstance() {
+    public static CardManager getInstance() {
         if(instance == null) {
             instance = new CardManager();
         }
@@ -45,6 +45,21 @@ public class CardManager {
     public void addCard(RedCard card) {
         redCards.put(card.getId(), card);
     }
+
+    public void addCard(CardType type, String content) {
+        switch (type) {
+            case RED:
+                redCards.put(idCounter, new RedCard(idCounter, content));
+                break;
+            case BLACK:
+                blackCards.put(idCounter, new BlackCard(idCounter, content));
+                break;
+            default:
+                return;
+        }
+        idCounter++;
+    }
+
 
     /**
      * Removes a card from the game
@@ -69,10 +84,26 @@ public class CardManager {
     }
 
     /**
+     * Returns a card based on its id
+     * @param id id of the card
+     * @return the given card
+     * @throws NoSuchCardException if a card with this id does not exist
+     */
+    public Card getCard(int id) throws NoSuchCardException {
+        Card c = blackCards.get(id);
+
+        if(c == null) {
+            c = redCards.get(id);
+        }
+        if(c == null) throw new NoSuchCardException(id);
+        return c;
+    }
+
+    /**
      * Draw a black card. This card will be removed from the list of drawable cards
      * @return
      */
-    private BlackCard drawBlackCard() {
+    public BlackCard drawBlackCard() {
         Random generator = new Random();
         Object[] values = blackCards.values().toArray();
         BlackCard card = (BlackCard) values[generator.nextInt(values.length)];
@@ -86,7 +117,7 @@ public class CardManager {
      * Draw a red card. This card will be removed from the list of drawable cards
      * @return
      */
-    private RedCard drawRedCard() {
+    public RedCard drawRedCard() {
         Random generator = new Random();
         Object[] values = redCards.values().toArray();
         RedCard card = (RedCard) values[generator.nextInt(values.length)];
@@ -94,6 +125,12 @@ public class CardManager {
         redCards.remove(card.getId());
 
         return card;
+    }
+
+    public CardType getCardType(int id) throws NoSuchCardException {
+        if(redCards.containsKey(id)) return CardType.RED;
+        else if(blackCards.containsKey(id)) return CardType.BLACK;
+        else throw new NoSuchCardException(id);
     }
 
     /**

@@ -1,6 +1,6 @@
 package me.shrix.cardapi.db.repositories;
 
-import me.shrix.cardapi.db.models.Card;
+import me.shrix.cardapi.game.Card;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;

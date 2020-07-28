@@ -2,7 +2,6 @@ package me.shrix.cardapi;
 
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
-import me.shrix.cardapi.db.models.Card;
 import me.shrix.cardapi.db.repositories.CardRepository;
 import me.shrix.cardapi.db.repositories.PlayerRepository;
 import org.slf4j.Logger;

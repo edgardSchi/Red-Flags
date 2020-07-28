@@ -1,6 +1,7 @@
 package me.shrix.cardapi.game;
 
-import me.shrix.cardapi.db.models.Card;
+import me.shrix.cardapi.game.exceptions.NoSuchCardException;
+import me.shrix.cardapi.game.exceptions.NoSuchPlayerException;
 import me.shrix.cardapi.game.exceptions.UserIdTakenException;
 import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 import me.shrix.cardapi.game.gamestates.GameStateManager;
@@ -22,14 +23,16 @@ public class Game {
     private static Game instance;
 
     //private HashMap<String, Player> players = new HashMap<String, Player>();
-    private ArrayList<Card> blackCardsInGame = new ArrayList<Card>();
-    private ArrayList<Card> redCardsInGame = new ArrayList<Card>();
+    //private ArrayList<Card> blackCardsInGame = new ArrayList<Card>();
+    //private ArrayList<Card> redCardsInGame = new ArrayList<Card>();
     private GameStateManager gsm;
     private PlayerManager playerManager;
+    private CardManager cardManager;
 
     private Game() {
         gsm = new GameStateManager();
         playerManager = PlayerManager.getInstance();
+        cardManager = CardManager.getInstance();
     }
 
     public static Game getInstance() {
@@ -49,12 +52,20 @@ public class Game {
         }
     }*/
 
-    public void addCard(Card card) {
-        if (card.getCardType() == CardType.BLACK) {
-            blackCardsInGame.add(card);
-        } else {
-            redCardsInGame.add(card);
-        }
+    /**
+     * Add a new black card to the game
+     * @param content text on the card
+     */
+    public void addBlackCard(String content) {
+        cardManager.addCard(CardManager.CardType.BLACK, content);
+    }
+
+    /**
+     * Add a new red card to the game
+     * @param content text on the card
+     */
+    public void addRedCard(String content) {
+        cardManager.addCard(CardManager.CardType.RED, content);
     }
 
     public void addPlayer(String id, String username) throws UsernameTakenException, UserIdTakenException {
@@ -70,21 +81,14 @@ public class Game {
     }
 
     //Change the output
-    public void playCard(String userId, int cardId) {
+    public void playCard(String userId, int cardId) throws NoSuchPlayerException, NoSuchCardException {
         Player player = playerManager.getPlayer(userId);
 
         if(!player.equals(currentPlayer)) return;
 
-        //Check if the player has the card
-        for(Card c : player.getCards()) {
-            if(c.getId() == cardId) {
-                player.getCards().remove(c);
-                if(c.getCardType() == CardType.BLACK) {
-                    blackCardsInGame.remove(c);
-                } else {
-                    redCardsInGame.remove(c);
-                }
-            }
+        if(player.hasCard(cardId)) {
+            player.removeCard(cardId);
+            System.out.println("Card " + cardManager.getCard(cardId).toString() + " was played by " + player.getUsername());
         }
     }
 
@@ -97,10 +101,10 @@ public class Game {
     }*/
 
     public Card drawBlackCard() {
-        return drawCard(blackCardsInGame);
+        return cardManager.drawBlackCard();
     }
 
-    public Card[] drawBlackCards(int n) {
+/*    public Card[] drawBlackCards(int n) {
         Card[] cards = new Card[n];
 
         for(int i = 0; i < n; i++) {
@@ -118,13 +122,13 @@ public class Game {
         }
 
         return cards;
-    }
+    }*/
 
     public Card drawRedCard() {
-        return drawCard(redCardsInGame);
+        return cardManager.drawRedCard();
     }
 
-    private Card drawCard(ArrayList<Card> list) {
+/*    private Card drawCard(ArrayList<Card> list) {
         int random = (int)(Math.random() * list.size());
 
         Card card = list.get(random);
@@ -132,19 +136,25 @@ public class Game {
 
         System.out.println("Karte _" + card.getContent() + "_ wurde gezogen!" + " | Random: " + random);
         return card;
-    }
+    }*/
 
-    public void everPlayerDrawsBlackCard() {
+/*    public void everPlayerDrawsBlackCard() {
         everyPlayerDrawsCard(blackCardsInGame);
     }
 
     public void everPlayerDrawsRedCard() {
         everyPlayerDrawsCard(redCardsInGame);
+    }*/
+
+    private void everyPlayerDrawsBlackCard() {
+        for (Player p : playerManager.getPlayers()) {
+            p.addBlackCard(cardManager.drawBlackCard());
+        }
     }
 
-    private void everyPlayerDrawsCard(ArrayList<Card> list) {
+    private void everyPlayerDrawsRedCard() {
         for (Player p : playerManager.getPlayers()) {
-            p.addCard(drawCard(list));
+            p.addRedCard(cardManager.drawRedCard());
         }
     }
 

@@ -10,11 +10,11 @@ public class Idle implements IGameState {
 
         Game game = Game.getInstance();
 
-        for(Player p : game.getPlayers()) {
+/*        for(Player p : game.getPlayers()) {
             for(int i = 0; i < Game.NUMBER_OF_RED_CARDS_IN_HAND; i++) {
                 p.addCard(game.drawRedCard());
             }
-        }
+        }*/
 
         return GameState.NEW_TURN;
     }

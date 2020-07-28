@@ -34,7 +34,7 @@ public class NewTurn implements IGameState {
     private void drawNewCards() {
         Game game = Game.getInstance();
         //Draw new red cards
-        for(Player p : game.getPlayers()) {
+/*        for(Player p : game.getPlayers()) {
             if(p.numberOfRedCards() < Game.NUMBER_OF_RED_CARDS_IN_HAND) {
                 p.addCards(game.drawRedCards(Game.NUMBER_OF_RED_CARDS_IN_HAND - p.numberOfRedCards()));
             }
@@ -44,6 +44,6 @@ public class NewTurn implements IGameState {
             if(p.numberOfBlackCards() < Game.NUMBER_OF_BLACK_CARDS_IN_HAND) {
                 p.addCards(game.drawBlackCards(Game.NUMBER_OF_BLACK_CARDS_IN_HAND - p.numberOfBlackCards()));
             }
-        }
+        }*/
     }
 }

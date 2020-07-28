@@ -20,23 +20,26 @@ public class GameTests {
     @Test
     void addNewPlayer() throws UsernameTakenException, UserIdTakenException {
 
-        game.addPlayer(new Player("0", "foo"));
+        game.addPlayer(new Player("0", "Jonas"));
         Assertions.assertThrows(UsernameTakenException.class, () -> {
-            game.addPlayer(new Player("1", "foo"));
+            game.addPlayer(new Player("1", "Jonas"));
         });
-        game.addPlayer("3", "eddy");
+        game.addPlayer("3", "Martha");
         Assertions.assertThrows(UserIdTakenException.class, () -> {
-            game.addPlayer(new Player("0", "bar"));
+            game.addPlayer(new Player("0", "Noah"));
         });
 
         assertEquals(2, game.getNumberOfPlayers());
+
+        game.addPlayer("4", "Adam");
+        game.addPlayer(new Player("5", "Mikkel"));
     }
 
 
     void drawCard() throws UsernameTakenException, UserIdTakenException {
         game.addPlayer(new Player("0", "foo"));
         //game.generateTestCards(10);
-        game.everPlayerDrawsBlackCard();
+        //game.everPlayerDrawsBlackCard();
         //assertNotNull(game.getPlayer("0").getCards());
     }
 }

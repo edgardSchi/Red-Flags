@@ -1,6 +1,5 @@
 package me.shrix.cardapi;
 
-import me.shrix.cardapi.db.models.Card;
 import me.shrix.cardapi.game.Player;
 import me.shrix.cardapi.webocketModels.ErrorModel;
 import me.shrix.cardapi.webocketModels.UpdatePlayerCardsModel;
@@ -43,15 +42,15 @@ public class GameService {
         template.convertAndSendToUser(user, "/topic/join", players);
     }
 
-    public void sendPlayedCard(Card card) {
+/*    public void sendPlayedCard(Card card) {
         template.convertAndSend("/topic/cards", card);
-    }
+    }*/
 
-    public void sendDrawnCard(String user, Card card) {
+/*    public void sendDrawnCard(String user, Card card) {
         template.convertAndSendToUser(user, "/topic/cards", new UpdatePlayerCardsModel(UpdatePlayerCardsModel.Intent.ADD_CARD, user, card));
-    }
+    }*/
 
-    public void sendDeleteCard(String user, Card card) {
+/*    public void sendDeleteCard(String user, Card card) {
         template.convertAndSendToUser(user, "/topic/cards", new UpdatePlayerCardsModel(UpdatePlayerCardsModel.Intent.DELETE_CARD, user, card));
-    }
+    }*/
 }
