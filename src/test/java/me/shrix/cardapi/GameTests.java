@@ -33,13 +33,27 @@ public class GameTests {
 
         game.addPlayer("4", "Adam");
         game.addPlayer(new Player("5", "Mikkel"));
+
+        //game.nextState();
     }
 
-
+    /**
+     * Tests if cards are being drawn correctly
+     * @throws UsernameTakenException
+     * @throws UserIdTakenException
+     */
+    @Test
     void drawCard() throws UsernameTakenException, UserIdTakenException {
-        game.addPlayer(new Player("0", "foo"));
-        //game.generateTestCards(10);
-        //game.everPlayerDrawsBlackCard();
-        //assertNotNull(game.getPlayer("0").getCards());
+        game.drawFullHand();
+        for(Player p : game.getPlayers()) {
+            assertEquals(Game.NUMBER_OF_BLACK_CARDS_IN_HAND, p.numberOfBlackCards());
+            assertEquals(Game.NUMBER_OF_RED_CARDS_IN_HAND, p.numberOfRedCards());
+        }
+
+        game.drawFullHand();
+        for(Player p : game.getPlayers()) {
+            assertEquals(Game.NUMBER_OF_BLACK_CARDS_IN_HAND, p.numberOfBlackCards());
+            assertEquals(Game.NUMBER_OF_RED_CARDS_IN_HAND, p.numberOfRedCards());
+        }
     }
 }

@@ -22,9 +22,6 @@ public class Game {
 
     private static Game instance;
 
-    //private HashMap<String, Player> players = new HashMap<String, Player>();
-    //private ArrayList<Card> blackCardsInGame = new ArrayList<Card>();
-    //private ArrayList<Card> redCardsInGame = new ArrayList<Card>();
     private GameStateManager gsm;
     private PlayerManager playerManager;
     private CardManager cardManager;
@@ -41,16 +38,6 @@ public class Game {
         }
         return instance;
     }
-
-
- /*   public void generateTestCards(int n) {
-        for(int i = 0; i < n; i++) {
-            blackCardsInGame.add(new Card((short) i, CardType.BLACK, "Dies ist die schwarze Testkarte " + i));
-            redCardsInGame.add(new Card((short) i, CardType.RED, "Dies ist die rote Testkarte " + i));
-            System.out.println(blackCardsInGame.get(i));
-            System.out.println(redCardsInGame.get(i));
-        }
-    }*/
 
     /**
      * Add a new black card to the game
@@ -96,55 +83,13 @@ public class Game {
         return currentPlayer;
     }
 
-    /*public Player getPlayer(String id) {
-        return players.get(id);
-    }*/
-
     public Card drawBlackCard() {
         return cardManager.drawBlackCard();
     }
 
-/*    public Card[] drawBlackCards(int n) {
-        Card[] cards = new Card[n];
-
-        for(int i = 0; i < n; i++) {
-            cards[i] = drawBlackCard();
-        }
-
-        return cards;
-    }
-
-    public Card[] drawRedCards(int n) {
-        Card[] cards = new Card[n];
-
-        for(int i = 0; i < n; i++) {
-            cards[i] = drawRedCard();
-        }
-
-        return cards;
-    }*/
-
     public Card drawRedCard() {
         return cardManager.drawRedCard();
     }
-
-/*    private Card drawCard(ArrayList<Card> list) {
-        int random = (int)(Math.random() * list.size());
-
-        Card card = list.get(random);
-        list.remove(random);
-
-        System.out.println("Karte _" + card.getContent() + "_ wurde gezogen!" + " | Random: " + random);
-        return card;
-    }*/
-
-/*    public void everPlayerDrawsBlackCard() {
-        everyPlayerDrawsCard(blackCardsInGame);
-    }
-
-    public void everPlayerDrawsRedCard() {
-        everyPlayerDrawsCard(redCardsInGame);
-    }*/
 
     private void everyPlayerDrawsBlackCard() {
         for (Player p : playerManager.getPlayers()) {
@@ -155,6 +100,20 @@ public class Game {
     private void everyPlayerDrawsRedCard() {
         for (Player p : playerManager.getPlayers()) {
             p.addRedCard(cardManager.drawRedCard());
+        }
+    }
+
+    /**
+     * Every player gets the maximum number of cards in his hands
+     */
+    public void drawFullHand() {
+        for(Player p: playerManager.getPlayers()) {
+            while (p.numberOfBlackCards() < NUMBER_OF_BLACK_CARDS_IN_HAND) {
+                p.addBlackCard(cardManager.drawBlackCard());
+            }
+            while (p.numberOfRedCards() < NUMBER_OF_RED_CARDS_IN_HAND) {
+                p.addRedCard(cardManager.drawRedCard());
+            }
         }
     }
 

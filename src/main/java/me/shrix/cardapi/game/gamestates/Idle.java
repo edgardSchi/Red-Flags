@@ -8,13 +8,7 @@ public class Idle implements IGameState {
     @Override
     public GameState getNextGameState() {
 
-        Game game = Game.getInstance();
-
-/*        for(Player p : game.getPlayers()) {
-            for(int i = 0; i < Game.NUMBER_OF_RED_CARDS_IN_HAND; i++) {
-                p.addCard(game.drawRedCard());
-            }
-        }*/
+        Game.getInstance().drawFullHand();
 
         return GameState.NEW_TURN;
     }
