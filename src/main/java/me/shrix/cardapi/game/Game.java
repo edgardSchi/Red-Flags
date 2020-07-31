@@ -17,9 +17,6 @@ public class Game {
     public static final int NUMBER_OF_BLACK_CARDS_IN_HAND = 3;
     public static final int POINTS_TO_WIN = 3;
 
-    //The current player, who chooses a card or needs to play a card
-    private Player currentPlayer;
-
     private static Game instance;
 
     private GameStateManager gsm;
@@ -28,8 +25,8 @@ public class Game {
 
     private Game() {
         gsm = new GameStateManager();
-        playerManager = PlayerManager.getInstance();
-        cardManager = CardManager.getInstance();
+        playerManager = new PlayerManager();
+        cardManager = new CardManager();
     }
 
     public static Game getInstance() {
@@ -37,6 +34,15 @@ public class Game {
             instance = new Game();
         }
         return instance;
+    }
+
+    /**
+     * Resets the whole game, deleting all players and cards
+     */
+    public void resetGame() {
+        playerManager = new PlayerManager();
+        cardManager = new CardManager();
+        gsm = new GameStateManager();
     }
 
     /**
@@ -63,6 +69,10 @@ public class Game {
         playerManager.addPlayer(player);
     }
 
+    public Player getPlayer(String id) throws NoSuchPlayerException {
+        return playerManager.getPlayer(id);
+    }
+
     public List<Player> getPlayers() {
         return playerManager.getPlayers();
     }
@@ -71,7 +81,7 @@ public class Game {
     public void playCard(String userId, int cardId) throws NoSuchPlayerException, NoSuchCardException {
         Player player = playerManager.getPlayer(userId);
 
-        if(!player.equals(currentPlayer)) return;
+        if(!player.equals(playerManager.getCurrentPlayer())) return;
 
         if(player.hasCard(cardId)) {
             player.removeCard(cardId);
@@ -79,15 +89,15 @@ public class Game {
         }
     }
 
-    public Player getCurrentPlayer() {
+/*    public Player getCurrentPlayer() {
         return currentPlayer;
-    }
+    }*/
 
-    public Card drawBlackCard() {
+    public BlackCard drawBlackCard() {
         return cardManager.drawBlackCard();
     }
 
-    public Card drawRedCard() {
+    public RedCard drawRedCard() {
         return cardManager.drawRedCard();
     }
 
@@ -108,10 +118,10 @@ public class Game {
      */
     public void drawFullHand() {
         for(Player p: playerManager.getPlayers()) {
-            while (p.numberOfBlackCards() < NUMBER_OF_BLACK_CARDS_IN_HAND) {
+            while (p.getNumberOfBlackCards() < NUMBER_OF_BLACK_CARDS_IN_HAND) {
                 p.addBlackCard(cardManager.drawBlackCard());
             }
-            while (p.numberOfRedCards() < NUMBER_OF_RED_CARDS_IN_HAND) {
+            while (p.getNumberOfRedCards() < NUMBER_OF_RED_CARDS_IN_HAND) {
                 p.addRedCard(cardManager.drawRedCard());
             }
         }

@@ -106,13 +106,21 @@ public class Player {
         blackCards.remove(id);
     }
 
-    public void removeRedCards(int id) {
+    public void removeRedCard(int id) {
         redCards.remove(id);
     }
 
     public void removeCard(int id) {
         redCards.remove(id);
         redCards.remove(id);
+    }
+
+    /**
+     * Removes all cards from the players hand
+     */
+    public void clearHand() {
+        redCards.clear();
+        blackCards.clear();
     }
 
     /**
@@ -124,16 +132,16 @@ public class Player {
         return blackCards.containsKey(id) | redCards.containsKey(id);
     }
 
-    public int numberOfBlackCards() {
+    public int getNumberOfBlackCards() {
         return blackCards.size();
     }
 
-    public int numberOfRedCards() {
+    public int getNumberOfRedCards() {
         return redCards.size();
     }
 
     public int getNumberOfCards() {
-        return numberOfBlackCards() + numberOfRedCards();
+        return getNumberOfBlackCards() + getNumberOfRedCards();
     }
 
     public Status getStatus() {

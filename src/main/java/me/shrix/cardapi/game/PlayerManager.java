@@ -16,16 +16,16 @@ public class PlayerManager {
     private final HashMap<String, Player> players;
     private String currentPlayerId;
 
-    private PlayerManager() {
+    public PlayerManager() {
         players = new HashMap<>();
     }
 
-    public static PlayerManager getInstance() {
+/*    public static PlayerManager getInstance() {
         if(instance == null) {
             instance = new PlayerManager();
         }
         return instance;
-    }
+    }*/
 
     /**
      * Returns all current players of a game

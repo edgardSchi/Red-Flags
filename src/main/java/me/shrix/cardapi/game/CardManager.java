@@ -16,19 +16,19 @@ public class CardManager {
 
     private int idCounter = 0;
 
-    private CardManager() {
+    public CardManager() {
         blackCards = new HashMap<Integer, BlackCard>();
         redCards = new HashMap<Integer, RedCard>();
 
         generateTestCards(50);
     }
 
-    public static CardManager getInstance() {
+/*    public static CardManager getInstance() {
         if(instance == null) {
             instance = new CardManager();
         }
         return instance;
-    }
+    }*/
 
     /**
      * Adds a black card to the playable cards
