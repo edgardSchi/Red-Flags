@@ -16,12 +16,12 @@ public class NewTurn implements IGameState {
     }
 
     @Override
-    public void onCardPlayed(String userID, int cardID) {
+    public void onCardPlayed(Player player, int cardID) {
 
     }
 
     @Override
-    public void onCardBlockChosen(String userID, int cardID) {
+    public void onCardBlockChosen(Player player, int cardID) {
 
     }
 

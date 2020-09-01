@@ -10,16 +10,16 @@ public class Idle implements IGameState {
 
         Game.getInstance().drawFullHand();
 
-        return GameState.NEW_TURN;
+        return GameState.PLAYING_BLACK;
     }
 
     @Override
-    public void onCardPlayed(String userID, int cardID) {
+    public void onCardPlayed(Player player, int cardID) {
 
     }
 
     @Override
-    public void onCardBlockChosen(String userID, int cardID) {
+    public void onCardBlockChosen(Player player, int cardID) {
 
     }
 

@@ -5,10 +5,13 @@ import me.shrix.cardapi.game.exceptions.NoSuchPlayerException;
 import me.shrix.cardapi.game.exceptions.UserIdTakenException;
 import me.shrix.cardapi.game.exceptions.UsernameTakenException;
 import me.shrix.cardapi.game.gamestates.GameStateManager;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 
 @Component
 public class Game {
@@ -22,6 +25,11 @@ public class Game {
     private GameStateManager gsm;
     private PlayerManager playerManager;
     private CardManager cardManager;
+
+    private HashMap<String, Pair<String, String>> blackCardsPlayed;
+    private HashMap<String, String> redCardsPlayed;
+
+    private Queue<String> playOrder;
 
     private Game() {
         gsm = new GameStateManager();
@@ -83,9 +91,11 @@ public class Game {
 
         if(!player.equals(playerManager.getCurrentPlayer())) return;
 
+
         if(player.hasCard(cardId)) {
-            player.removeCard(cardId);
-            System.out.println("Card " + cardManager.getCard(cardId).toString() + " was played by " + player.getUsername());
+            //player.removeCard(cardId);
+            //System.out.println("Card " + cardManager.getCard(cardId).toString() + " was played by " + player.getUsername());
+            gsm.playCard(player, cardId);
         }
     }
 
@@ -133,5 +143,9 @@ public class Game {
 
     public int getNumberOfPlayers() {
         return playerManager.getPlayers().size();
+    }
+
+    public CardManager.CardType getCardType(int cardId) throws NoSuchCardException {
+        return cardManager.getCardType(cardId);
     }
 }

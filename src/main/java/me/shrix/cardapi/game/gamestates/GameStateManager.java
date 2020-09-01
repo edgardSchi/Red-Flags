@@ -1,6 +1,7 @@
 package me.shrix.cardapi.game.gamestates;
 
 import me.shrix.cardapi.game.Game;
+import me.shrix.cardapi.game.Player;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -33,5 +34,9 @@ public class GameStateManager {
         //gets the next game state and performs the last tasks of the current game state
         currentGameState = gameStates.get(currentGameState.getNextGameState());
         currentGameState.onStart();
+    }
+
+    public void playCard(Player player, int cardId) {
+        currentGameState.onCardPlayed(player, cardId);
     }
 }

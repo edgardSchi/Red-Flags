@@ -1,19 +1,21 @@
 package me.shrix.cardapi.game.gamestates;
 
+import me.shrix.cardapi.game.Player;
+
 public class PlayingRed implements IGameState {
 
     @Override
     public GameState getNextGameState() {
-        return null;
+        return GameState.BACHELOR_CHOOSING;
     }
 
     @Override
-    public void onCardPlayed(String userID, int cardID) {
+    public void onCardPlayed(Player player, int cardID) {
 
     }
 
     @Override
-    public void onCardBlockChosen(String userID, int cardID) {
+    public void onCardBlockChosen(Player player, int cardID) {
 
     }
 

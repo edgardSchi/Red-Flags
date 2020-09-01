@@ -1,23 +1,40 @@
 package me.shrix.cardapi.game.gamestates;
 
-public class PlayingBlack implements IGameState{
-    @Override
-    public GameState getNextGameState() {
-        return null;
-    }
+import me.shrix.cardapi.game.CardManager;
+import me.shrix.cardapi.game.Game;
+import me.shrix.cardapi.game.Player;
+import me.shrix.cardapi.game.exceptions.NoSuchCardException;
 
-    @Override
-    public void onCardPlayed(String userID, int cardID) {
+import java.util.ArrayList;
 
-    }
+public class PlayingBlack implements IGameState {
 
-    @Override
-    public void onCardBlockChosen(String userID, int cardID) {
-
-    }
+    private ArrayList<Player> playersNotPlayed;
 
     @Override
     public void onStart() {
+        playersNotPlayed = new ArrayList<>();
+        playersNotPlayed.addAll(Game.getInstance().getPlayers());
+    }
+
+    @Override
+    public GameState getNextGameState() {
+        return GameState.PLAYING_RED;
+    }
+
+    @Override
+    public void onCardPlayed(Player player, int cardID) {
+        try {
+            if(Game.getInstance().getCardType(cardID) != CardManager.CardType.BLACK) {
+                return;
+            }
+        } catch (NoSuchCardException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCardBlockChosen(Player player, int cardID) {
 
     }
 }
